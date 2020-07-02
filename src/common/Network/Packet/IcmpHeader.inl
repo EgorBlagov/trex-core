@@ -64,9 +64,9 @@ inline uint16_t ICMPHeader::getChecksum()
     return PKT_NTOHS(myChecksum);
 }
 
-inline uint16_t ICMPHeader::setChecksumRaw(uint16_t argNewChecksum)
+inline void ICMPHeader::setChecksumRaw(uint16_t argNewChecksum)
 {
-    myChecksum = argNewChecksum
+    myChecksum = argNewChecksum;
 }
 
 inline void ICMPHeader::updateCheckSum(uint16_t len)
