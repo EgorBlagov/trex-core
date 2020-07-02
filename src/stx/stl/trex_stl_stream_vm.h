@@ -1341,6 +1341,10 @@ public:
     uint16_t m_pkt_offset; /* the offset of IPv4 header from the start of the packet  */
 };
 
+/**
+ * Fix checksum for ICMPv6
+ *
+ */
 class StreamVmInstructionFixChecksumIcmpv6 : public StreamVmInstruction {
 public:
     StreamVmInstructionFixChecksumIcmpv6(uint16_t l2_len, uint16_t l3_len)

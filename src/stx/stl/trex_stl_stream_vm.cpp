@@ -887,15 +887,18 @@ void StreamVm::build_program(){
                     err(errorBase.str());
                 }
 
-                uint16_t l4_header_size = ipv6->getPayloadLen();
-                add_field_cnt(icmpv6Fix->m_l2_len + icmpv6Fix->m_l3_len + l4_header_size);
-
-                StreamDPOpIcmpv6Fix ipv_fix;
-                ipv_fix.m_l2_len = icmpv6Fix->m_l2_len;
-                ipv_fix.m_l3_len = icmpv6Fix->m_l3_len;
-                ipv_fix.m_op = StreamDPVmInstructions::ditFIX_ICMPV6_CS;
-                m_instructions.add_command(&ipv_fix,sizeof(ipv_fix));
             }
+
+            const uint16_t ICMP_CHECKSUM_OFFSET = 2;
+            const uint16_t ICMP_CHECKSUM_SIZE = 2;
+
+            add_field_cnt(icmpv6Fix->m_l2_len + icmpv6Fix->m_l3_len + ICMP_CHECKSUM_OFFSET + ICMP_CHECKSUM_SIZE);
+
+            StreamDPOpIcmpv6Fix ipv_fix;
+            ipv_fix.m_l2_len = icmpv6Fix->m_l2_len;
+            ipv_fix.m_l3_len = icmpv6Fix->m_l3_len;
+            ipv_fix.m_op = StreamDPVmInstructions::ditFIX_ICMPV6_CS;
+            m_instructions.add_command(&ipv_fix,sizeof(ipv_fix));
         }
 
         if (ins_type == StreamVmInstruction::itFLOW_RAND_LIMIT) {
